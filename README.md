@@ -7,7 +7,7 @@ _24th July 2023_
 _US Bikeshare Data Python Project_
 
 ### Description
-Describe what your project is about and what it does
+_Display a series of bikesharing data within three cities (Washington, Chicago, New York City) to user as requested._
 
 ### Files used
 Include the files used
