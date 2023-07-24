@@ -10,7 +10,9 @@ _US Bikeshare Data Python Project_
 _Display a series of bikesharing data within three cities (Washington, Chicago, New York City) to user as requested._
 
 ### Files used
-Include the files used
+- _chicago.csv_
+- _new_york_city.csv_
+- _washington.csv_
 
 ### Credits
 It's important to give proper credit. Add links to any repo that inspired you or blogposts you consulted.
