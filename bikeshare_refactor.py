@@ -12,65 +12,70 @@ def get_filters():
         (str) city - name of the city to analyze
         (str) month - name of the month to filter by, or "all" to apply no month filter
         (str) day - name of the day of week to filter by, or "all" to apply no day filter
+    
+    The following try-except statement checks for errors in city's input
     """
-    print('Good day! Welcome to US bikeshare data service! Let\'s start with a city from the following list:')
-    
-    city = input("Will it be Chicago, New York City or Washington: ")
-    
-    """The following try-except statement checks for errors in city's input"""
 
-    while city.lower().upper().swapcase() not in ['chicago', 'new york city', 'washington']: 
-        try:
-            print("Ooppss, looks like your input wasn't one of the three cities!")
-            error_name = input("Would you like to try again? Type y or n: ") 
-            if error_name == "y":
-                city = input("Sure! Will it be Chicago, New York City or Washington: ")
-                return city.lower()
-
-            else:
+    cities = ['chicago', 'new york city', 'washington']
+    
+    while True:
+        city = input("Good day! Welcome to US bikeshare data service! Let's start with a city from the following list:\n(Chicago, New York City, Washington): ").strip().lower()
+        if city in cities:
+            break
+        else:
+            error_name = input("Oops, looks like your input wasn't one of the three cities! Would you like to try again? Type y or n: ").strip().lower()
+            if error_name != "y":
                 print("Thanks for checking us out! See you next time!")
-                return
-    
-        except Exception as e:
-            print("Ahh... looks like we have to restart this search engine because: {}".format(e)) 
-            return
-        
-    filtering_1 = input("Looks like it's {}! Would you like to filter by month, day or none at all? Type all for no filter: ".format(city))
-
-    """The following try-except statement checks for errors in month's input"""
-
-    if filtering_1.lower().upper().swapcase() == 'month':    
-        while True:
-            month = input("We have information from January 2017 up to June 2017, please enter all or your desired month to proceed:\n(January, February, March, April, May, June): ")
-            if month.lower().upper().swapcase() in ['january', 'february', 'march', 'april', 'may', 'june', 'all']:
-                print("You\'ve selected '{}' to proceed, we're digging through for you now!".format(month))
-                return city.lower(), month.lower(), None
-            else:
-                error_month = input("Ooppss, either your month wasn't spelled in full, or you have entered something I don't understand! Would you like to try again? Type y or n: ")
-                if error_month.lower().upper().swapcase() != "y":
-                    print("No problem! Check us out again next time!")
-                    return None, None, None
+                sys.exit()
             
+    filtering_1 = input("Looks like it's {}! Would you like to filter by month, day or none at all? Type all for no filter: ".format(city)).strip().lower()  
 
-    elif filtering_1.lower().upper().swapcase() == 'day':
-        while True:    
-            day = input("Thanks! You can choose either all or enter a day of the week to proceed:\n(Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday): ")
-            if day.lower().upper().swapcase() in ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'all']:
-                print("You\'ve selected '{}' to proceed, we're digging through for you now!".format(day))
-                return city.lower(), None, day.lower()
-            else:
-                error_day = input("Ooppss, either your day wasn't spelled in full, or you have entered something I don't understand! Would you like to try again? Type y or n: ")
-                if error_day.lower().upper().swapcase() != "y":
-                    print("No problem! Check us out again next time!")
-                    return None, None, None
+    if filtering_1 == 'all':
+        return city, 'all', 'all'
     
-    elif filtering_1.lower().upper().swapcase() == 'all':
-        print("You\'ve selected '{}' to proceed, we're digging through for you now!".format(filtering_1))
-        return city.lower(), None, None
+    elif filtering_1 == 'month':
+        return city, input_month(city), 'all'
     
-    print('-' * 40)
+    elif filtering_1 == 'day':
+        return city, 'all', input_day(city, 'all')
     
+    else:
+        return city, 'all', 'all' 
+
+"""The following try-except statement checks for errors in month's input"""
+
+def input_month(city):
+    months = ['january', 'february', 'march', 'april', 'may', 'june', 'all']
     
+    while True:
+        month = input("We have information from January 2017 up to June 2017, please enter all or your desired month to proceed:\n(January, February, March, April, May, June): ").strip().lower()
+        if month in months:
+            print("You\'ve selected '{}' to proceed, we're digging through for you now!".format(month))
+            return month
+        else:
+            error_month = input("Ooppss, either your month wasn't spelled in full, or you have entered something I don't understand! Would you like to try again? Type y or n: ").strip().lower()
+            if error_month != "y":
+                print("No problem! Check us out again next time!")
+                sys.exit()
+            
+"""The following try-except statement checks for errors in day's input"""
+
+def input_day(city, month):
+    days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'all']
+    
+    while True:
+        day = input("Thanks! You can choose either all or enter a day of the week to proceed:\n(Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday): ").strip().lower()
+        if day in days:
+            print("You\'ve selected '{}' to proceed, we're digging through for you now!".format(day))
+            return day
+            
+        else:
+            error_day = input("Ooppss, either your day wasn't spelled in full, or you have entered something I don't understand! Would you like to try again? Type y or n: ").strip().lower()
+            if error_day != "y":
+                print("No problem! Check us out again next time!")
+                sys.exit()
+        
+print('-' * 40)
 
 CITY_DATA = { 'chicago': '/Users/danomano/Desktop/DataScience/RMIT project/Python/bikeshare-2/chicago.csv',
               'new york city': '/Users/danomano/Desktop/DataScience/RMIT project/Python/bikeshare-2/new_york_city.csv',
