@@ -12,30 +12,35 @@ def get_filters():
         (str) city - name of the city to analyze
         (str) month - name of the month to filter by, or "all" to apply no month filter
         (str) day - name of the day of week to filter by, or "all" to apply no day filter
+    
+    The following try-except statement checks for errors in city's input
     """
-    print('Good day! Welcome to US bikeshare data service! Let\'s start with a city from the following list:')
-    
-    city = input("Will it be Chicago, New York City or Washington: ")
-    
-    """The following try-except statement checks for errors in city's input"""
 
-    while city.lower().upper().swapcase() not in ['chicago', 'new york city', 'washington']: 
-        try:
-            print("Ooppss, looks like your input wasn't one of the three cities!")
-            error_name = input("Would you like to try again? Type y or n: ") 
-            if error_name == "y":
-                city = input("Sure! Will it be Chicago, New York City or Washington: ")
-                return city.lower()
-
-            else:
+    cities = ['chicago', 'new york city', 'washington']
+    
+    while True:
+        city = input("Good day! Welcome to US bikeshare data service! Let's start with a city from the following list:\n(Chicago, New York City, Washington): ").strip().lower()
+        if city in cities:
+            break
+        else:
+            error_name = input("Oops, looks like your input wasn't one of the three cities! Would you like to try again? Type y or n: ").strip().lower()
+            if error_name != "y":
                 print("Thanks for checking us out! See you next time!")
-                return
+                sys.exit()
+            
+    filtering_1 = input("Looks like it's {}! Would you like to filter by month, day or none at all? Type all for no filter: ".format(city)).strip().lower()  
+
+    if filtering_1 == 'all':
+        return city, 'all', 'all'
     
-        except Exception as e:
-            print("Ahh... looks like we have to restart this search engine because: {}".format(e)) 
-            return
-        
-    filtering_1 = input("Looks like it's {}! Would you like to filter by month, day or none at all? Type all for no filter: ".format(city))
+    elif filtering_1 == 'month':
+        return city, input_month(city), 'all'
+    
+    elif filtering_1 == 'day':
+        return city, 'all', input_day(city, 'all')
+    
+    else:
+        return city, 'all', 'all' 
 
     """The following try-except statement checks for errors in month's input"""
 
