@@ -42,19 +42,21 @@ def get_filters():
     else:
         return city, 'all', 'all' 
 
-    """The following try-except statement checks for errors in month's input"""
+"""The following try-except statement checks for errors in month's input"""
 
-    if filtering_1.lower().upper().swapcase() == 'month':    
-        while True:
-            month = input("We have information from January 2017 up to June 2017, please enter all or your desired month to proceed:\n(January, February, March, April, May, June): ")
-            if month.lower().upper().swapcase() in ['january', 'february', 'march', 'april', 'may', 'june', 'all']:
-                print("You\'ve selected '{}' to proceed, we're digging through for you now!".format(month))
-                return city.lower(), month.lower(), None
-            else:
-                error_month = input("Ooppss, either your month wasn't spelled in full, or you have entered something I don't understand! Would you like to try again? Type y or n: ")
-                if error_month.lower().upper().swapcase() != "y":
-                    print("No problem! Check us out again next time!")
-                    return None, None, None
+def input_month(city):
+    months = ['january', 'february', 'march', 'april', 'may', 'june', 'all']
+    
+    while True:
+        month = input("We have information from January 2017 up to June 2017, please enter all or your desired month to proceed:\n(January, February, March, April, May, June): ").strip().lower()
+        if month in months:
+            print("You\'ve selected '{}' to proceed, we're digging through for you now!".format(month))
+            return month
+        else:
+            error_month = input("Ooppss, either your month wasn't spelled in full, or you have entered something I don't understand! Would you like to try again? Type y or n: ").strip().lower()
+            if error_month != "y":
+                print("No problem! Check us out again next time!")
+                sys.exit()
             
 
     elif filtering_1.lower().upper().swapcase() == 'day':
