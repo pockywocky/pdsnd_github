@@ -58,26 +58,24 @@ def input_month(city):
                 print("No problem! Check us out again next time!")
                 sys.exit()
             
+"""The following try-except statement checks for errors in day's input"""
 
-    elif filtering_1.lower().upper().swapcase() == 'day':
-        while True:    
-            day = input("Thanks! You can choose either all or enter a day of the week to proceed:\n(Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday): ")
-            if day.lower().upper().swapcase() in ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'all']:
-                print("You\'ve selected '{}' to proceed, we're digging through for you now!".format(day))
-                return city.lower(), None, day.lower()
-            else:
-                error_day = input("Ooppss, either your day wasn't spelled in full, or you have entered something I don't understand! Would you like to try again? Type y or n: ")
-                if error_day.lower().upper().swapcase() != "y":
-                    print("No problem! Check us out again next time!")
-                    return None, None, None
+def input_day(city, month):
+    days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'all']
     
-    elif filtering_1.lower().upper().swapcase() == 'all':
-        print("You\'ve selected '{}' to proceed, we're digging through for you now!".format(filtering_1))
-        return city.lower(), None, None
-    
-    print('-' * 40)
-    
-    
+    while True:
+        day = input("Thanks! You can choose either all or enter a day of the week to proceed:\n(Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday): ").strip().lower()
+        if day in days:
+            print("You\'ve selected '{}' to proceed, we're digging through for you now!".format(day))
+            return day
+            
+        else:
+            error_day = input("Ooppss, either your day wasn't spelled in full, or you have entered something I don't understand! Would you like to try again? Type y or n: ").strip().lower()
+            if error_day != "y":
+                print("No problem! Check us out again next time!")
+                sys.exit()
+        
+print('-' * 40)
 
 CITY_DATA = { 'chicago': '/Users/danomano/Desktop/DataScience/RMIT project/Python/bikeshare-2/chicago.csv',
               'new york city': '/Users/danomano/Desktop/DataScience/RMIT project/Python/bikeshare-2/new_york_city.csv',
